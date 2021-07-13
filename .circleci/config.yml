@@ -34,7 +34,7 @@ jobs:
       - ruby/install-deps
       - run:
           name: Database setup
-          command: bundle exec rails dbi:migrate
+          command: bundle exec rails db:migrate
       - run:
           name: test
           command: bundle exec rake test
