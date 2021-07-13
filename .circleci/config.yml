@@ -6,6 +6,8 @@ jobs:
   build:
     docker:
       - image: circleci/ruby:2.7
+        environment:
+          - BUNDLER_VERSION: 2.1.4
       # Githubのリポジトリと同名に修正しておく
     working_directory: ~/rails-docker-hry/src
     steps:
