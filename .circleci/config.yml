@@ -5,9 +5,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.7
-        environment:
-          - BUNDLER_VERSION: 2.1.4
+      - image: circleci/ruby:2.7.3
       # Githubのリポジトリと同名に修正しておく
     working_directory: ~/rails-docker-hry/src
     steps:
@@ -18,7 +16,7 @@ jobs:
 
   test:
     docker:
-      - image: circleci/ruby:2.7
+      - image: circleci/ruby:2.7.3
       - image: circleci/mysql:5.5
         environment:
           MYSQL_ROOT_PASSWORD: password
@@ -40,6 +38,8 @@ jobs:
       - run:
           name: test
           command: bundle exec rake test
+
+
 
 workflows:
   version: 2
