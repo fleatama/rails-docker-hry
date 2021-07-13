@@ -27,6 +27,8 @@ development:
 test:
   <<: *default
   database: app_test
+  # DockerではHostにdbを使っているが、CircleCIでは使っていないので環境変数を設定
+  host: <%= ENV.fetch("APP_DATABASE_HOST") { 'db' } %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

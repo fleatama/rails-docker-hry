@@ -1,0 +1,43 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@1.1.2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.7
+      # Githubのリポジトリと同名に修正しておく
+    working_directory: ~/rails_docker-hry/src
+    steps:
+      - checkout:
+            # Githubのリポジトリと同名に修正しておく
+          path: ~/rails_docker-hry
+      - ruby/install-deps
+
+  test:
+    docker:
+      - image: circleci/ruby:2.7
+      - image: circleci/mysql:5.5
+        environment:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: app_test
+          MYSQL_USER: root
+    environment:
+      BUNDLE_JOBS: "3"
+      BUNDLE_RETRY: "3"
+      APP_DATABASE_HOST: "127.0.0.1"
+      RAILS_ENV: test
+    working_directory: ~/rails_docker-hry/src
+    steps:
+      - checkout:
+          path: ~/rails_docker-hry
+      - ruby/install-deps
+      - run:
+          name: Database setup
+          command: bundle exec rails dbi:migrate
+      - run:
+          name: test
+          command: bundle exec rake test
+
+workflows:
+  version:
