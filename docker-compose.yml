@@ -16,6 +16,8 @@ services:
       - ./src:/app
     ports:
       - "3000:3000"
+    environment:
+      RAILS_ENV: environment
     # DBへの依存を示す
     depends_on:
       - db
